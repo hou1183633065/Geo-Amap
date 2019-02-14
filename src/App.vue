@@ -1,15 +1,15 @@
 <template>
   <div id="app">
-    <mapDrag @drag="dragMap" class="mapbox"></mapDrag>
+    <point-simplifier @drag="dragMap" class="mapbox"></point-simplifier>
   </div>
 </template>
 
 <script>
-import mapDrag from './components/Home.vue'
+import PointSimplifier from './components/PointSimplifier'
 export default {
   name: 'app',
   components: {
-    mapDrag
+    PointSimplifier
   },
   data () {
     return {
