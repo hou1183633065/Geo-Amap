@@ -1,40 +1,21 @@
 <template>
   <div id="app">
-    <point-simplifier @drag="dragMap" class="mapbox"></point-simplifier>
+    <marker-clusterer></marker-clusterer>
   </div>
 </template>
 
 <script>
-import PointSimplifier from './components/PointSimplifier'
+import MarkerClusterer from './components/MarkerCluster'
 export default {
   name: 'app',
   components: {
-    PointSimplifier
+    MarkerClusterer
   },
   data () {
     return {
-      dragData: {
-        lng: null,
-        lat: null,
-        address: null,
-        nearestJunction: null,
-        nearestRoad: null,
-        nearestPOI: null
-      }
     }
   },
   methods: {
-    dragMap (data) {
-      console.log(data)
-      this.dragData = {
-        lng: data.position.lng,
-        lat: data.position.lat,
-        address: data.address,
-        nearestJunction: data.nearestJunction,
-        nearestRoad: data.nearestRoad,
-        nearestPOI: data.nearestPOI
-      }
-    }
   }
 }
 </script>
