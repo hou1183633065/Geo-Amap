@@ -10,6 +10,7 @@ import { MapKey, MapVersion, PluginVersion } from "@/config/config";
 export default {
   data() {
     return {
+      markerMap: null,
       images1: require("@/assets/images/carStatus_01.png"),
       images2: require("@/assets/images/carStatus_02.png"),
       images3: require("@/assets/images/carStatus_03.png"),
@@ -30,57 +31,52 @@ export default {
       this.initMap();
     }
   },
-  beforeDestroy() {
-    
-  },
+  beforeDestroy() {},
   methods: {
     // 实例化地图
     initMap() {
-      let mapConfig = {
+      let mapConfig = (this.markerMap = new AMap.Map("js-container", {
         mapStyle: "amap://styles/5b64e5715c3330f0247483d96fcdbd1c",
         zoom: 8,
         resizeEnable: true,
         center: [105, 34]
-      };
-      let map = new AMap.Map("js-container", mapConfig);
-      this.setTextLabel(map)
-      setTimeout(() => {
-        this.markerClusterer(map);
-      }, 0);
+      }));
+        // 地图图块加载完成后触发
+        this.setTextLabel()
+        this.markerClusterer();
     },
-    setTextLabel(_map) {
+    setTextLabel() {
       let labelText = new AMap.Text({
-        map: _map,
-        text:'标记',
-        textAlign:'center',
+        map: this.markerMap,
+        text: "标记",
+        textAlign: "center",
         zIndex: 230,
         offset: new AMap.Pixel(0, -60),
-        style:{
-            'padding': '.75rem 1.25rem',
-            'margin-bottom': '1rem',
-            'border-radius': '.25rem',
-            'background-color': 'white',
-            'width': '15rem',
-            'border-width': 0,
-            'box-shadow': '0 2px 6px 0 rgba(114, 124, 245, .5)',
-            'text-align': 'center',
-            'font-size': '20px',
-            'color': 'blue'
+        style: {
+          padding: ".75rem 1.25rem",
+          "margin-bottom": "1rem",
+          "border-radius": ".25rem",
+          "background-color": "white",
+          width: "15rem",
+          "border-width": 0,
+          "box-shadow": "0 2px 6px 0 rgba(114, 124, 245, .5)",
+          "text-align": "center",
+          "font-size": "20px",
+          color: "blue"
         }
-      })
-      labelText.hide()
-      this.labelText = labelText
+      });
+      labelText.hide();
+      this.labelText = labelText;
     },
-    markerClusterer(_map) {
-      let resData = this.createPoints(_map.getCenter(), 100000);
-      let _markers = this.getMarkers(resData)
-      _map.plugin(["AMap.MarkerClusterer"], () => {
-        let cluster = new AMap.MarkerClusterer(_map);
+    markerClusterer() {
+      let resData = this.createPoints(this.markerMap.getCenter(), 100000);
+      let _markers = this.getMarkers(resData);
+      
+      this.markerMap.plugin(["AMap.MarkerClusterer"], () => {
+        let cluster = new AMap.MarkerClusterer(this.markerMap);
         cluster.setGridSize(100);
         // cluster.setMinClusterSize(5);
-        setTimeout(() => {
-          cluster.addMarkers(_markers);
-        }, 0);
+        cluster.addMarkers(_markers);
       });
     },
 
