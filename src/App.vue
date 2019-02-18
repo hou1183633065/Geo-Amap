@@ -5,19 +5,17 @@
 </template>
 
 <script>
-import MarkerClusterer from './components/MarkerCluster'
+import MarkerClusterer from "./components/MarkerCluster";
 export default {
-  name: 'app',
+  name: "app",
   components: {
     MarkerClusterer
   },
-  data () {
-    return {
-    }
+  data() {
+    return {};
   },
-  methods: {
-  }
-}
+  methods: {}
+};
 </script>
 
 <style lang="css" src="@/assets/App.css"></style>

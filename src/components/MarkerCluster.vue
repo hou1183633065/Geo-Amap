@@ -30,60 +30,53 @@ export default {
       this.initMap();
     }
   },
-  beforeDestroy() {
-    
-  },
   methods: {
     // 实例化地图
     initMap() {
-      let mapConfig = {
+      let map = new AMap.Map("js-container", {
         mapStyle: "amap://styles/5b64e5715c3330f0247483d96fcdbd1c",
         zoom: 8,
         resizeEnable: true,
         center: [105, 34]
-      };
-      let map = new AMap.Map("js-container", mapConfig);
-      this.setTextLabel(map)
-      setTimeout(() => {
-        this.markerClusterer(map);
-      }, 0);
+      });
+      this.setTextLabel(map);
+      this.markerClusterer(map);
     },
     setTextLabel(_map) {
       let labelText = new AMap.Text({
         map: _map,
-        text:'标记',
-        textAlign:'center',
+        text: "标记",
+        textAlign: "center",
         zIndex: 230,
         offset: new AMap.Pixel(0, -60),
-        style:{
-            'padding': '.75rem 1.25rem',
-            'margin-bottom': '1rem',
-            'border-radius': '.25rem',
-            'background-color': 'white',
-            'width': '15rem',
-            'border-width': 0,
-            'box-shadow': '0 2px 6px 0 rgba(114, 124, 245, .5)',
-            'text-align': 'center',
-            'font-size': '20px',
-            'color': 'blue'
+        style: {
+          "padding": ".75rem 1.25rem",
+          "margin-bottom": "1rem",
+          "border-radius": ".25rem",
+          "background-color": "white",
+          "width": "15rem",
+          "border-width": 0,
+          "box-shadow": "0 2px 6px 0 rgba(114, 124, 245, .5)",
+          "text-align": "center",
+          "font-size": "20px",
+          "color": "blue"
         }
-      })
-      labelText.hide()
-      this.labelText = labelText
+      });
+      labelText.hide();
+      this.labelText = labelText;
     },
     markerClusterer(_map) {
       let resData = this.createPoints(_map.getCenter(), 100000);
-      let _markers = this.getMarkers(resData)
+      let _markers = this.getMarkers(resData);
       _map.plugin(["AMap.MarkerClusterer"], () => {
         let cluster = new AMap.MarkerClusterer(_map);
         cluster.setGridSize(100);
         // cluster.setMinClusterSize(5);
-        setTimeout(() => {
-          cluster.addMarkers(_markers);
-        }, 0);
+        cluster.addMarkers(_markers);
       });
+      resData = null;
+      _markers = null;
     },
-
     getMarkers(data) {
       let markers = data.map(item => {
         let { imageUrl, size } = this.getIconConf(item.groupId);
