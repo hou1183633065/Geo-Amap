@@ -1,15 +1,18 @@
 <template>
   <div id="app">
-    <marker-clusterer></marker-clusterer>
+    <!-- <electric-fence></electric-fence> -->
+    <track-play-back></track-play-back>
   </div>
 </template>
 
 <script>
-import MarkerClusterer from "./components/MarkerCluster";
+import TrackPlayBack from "@/components/TrackPlayBack";
+import ElectricFence from "@/components/ElectricFence";
 export default {
   name: "app",
   components: {
-    MarkerClusterer
+    TrackPlayBack,
+    ElectricFence
   },
   data() {
     return {};
